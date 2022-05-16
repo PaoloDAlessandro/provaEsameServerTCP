@@ -53,7 +53,7 @@ public class Client {
     public static void executeConnection (String send) {
         String received = "";
         out.println(send);
-        System.out.println("sended " + send);
+        System.out.println("sent: " + send);
 
         try {
             received = in.readLine();

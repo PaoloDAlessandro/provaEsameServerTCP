@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.*;
 import java.util.ArrayList;
 import com.google.gson.Gson;
+
 
 
 public class ClientHandler implements Runnable {
@@ -15,6 +17,7 @@ public class ClientHandler implements Runnable {
     BufferedReader in;
     PrintWriter out;
     static ArrayList<City> cities = new ArrayList<City>();
+    DatabaseHandler dbh = null;
 
     ClientHandler (Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -23,6 +26,7 @@ public class ClientHandler implements Runnable {
     public void run () {
         this.buildCities();
         this.inizializeClientHandler();
+        this.inizializeDatabaseHandler();
         try {
             this.executeClientHandler();
         } catch (SocketException e) {
@@ -64,12 +68,11 @@ public class ClientHandler implements Runnable {
                         break;
 
                     case "all":
-                        out.println(gson.toJson(cities));
+                        out.println(dbh.selectAll());
                         break;
 
                     case "sorted_by_temp":
-                        sort_by_temp();
-                        out.println(gson.toJson(cities));
+                        out.println(dbh.sort_by_temp());
                         break;
 
                     case "sorted_by_name":
@@ -84,6 +87,10 @@ public class ClientHandler implements Runnable {
 
             if (s == "") break;
         }
+    }
+
+    void inizializeDatabaseHandler() {
+        dbh = new DatabaseHandler();
     }
 
 
@@ -117,13 +124,13 @@ public class ClientHandler implements Runnable {
     }
 
     void sort_by_temp() {
-        cities.sort(((o1, o2) -> {
+        cities.sort((o1, o2) -> {
             if (o1.getTemp() < o2.getTemp())
                 return 1;
             if (o1.getTemp() > o2.getTemp())
                 return -1;
             return 0;
-        }));
+        });
     }
 
     void sort_by_name() {
@@ -131,4 +138,6 @@ public class ClientHandler implements Runnable {
             return o1.getName().compareTo(o2.getName());
         });
     }
+
+
 }
