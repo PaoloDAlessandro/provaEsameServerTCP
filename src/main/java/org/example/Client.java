@@ -52,7 +52,7 @@ public class Client {
 
     public static void executeConnection (String send) {
         String received = "";
-        out.println(send);
+        out.println(send.toLowerCase());
         System.out.println("sent: " + send);
 
         try {

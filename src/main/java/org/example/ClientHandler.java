@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-import java.sql.*;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
@@ -77,7 +76,21 @@ public class ClientHandler implements Runnable {
 
                     case "sorted_by_name":
                         sort_by_name();
-                        out.println(gson.toJson(cities));
+                        out.println(dbh.sort_by_name());
+                        //out.println(gson.toJson(cities));
+                        break;
+
+                    case "add":
+                        insertData();
+                        break;
+
+                    case "remove":
+                        removeData();
+                        break;
+
+                    case "search":
+                        out.println(searchCity());
+                        break;
                 }
 
             } catch (NullPointerException e) {
@@ -116,6 +129,56 @@ public class ClientHandler implements Runnable {
         cities.add(new City(3,"Toronto",15.9));
         cities.add(new City(33,"Milan",25.94));
         cities.add(new City(55,"Rome",35.4));
+    }
+
+    void insertData() {
+        String city_name = "";
+        Double temp = 0.0;
+        out.println("Type city: ");
+        try {
+            city_name = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.println("Type temp: ");
+        try {
+            temp = Double.parseDouble(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        dbh.insertCity(city_name, temp);
+        out.println(city_name + " has been added");
+    }
+
+    String searchCity() {
+        String city_name = "";
+
+        try {
+            out.println("Type city to search for: ");
+            city_name = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String result = dbh.searchCity(city_name);
+
+        return result;
+
+    }
+
+    void removeData() {
+        String city_name = "";
+
+        try {
+            out.println("Type city to be deleted: ");
+            city_name = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        dbh.removeCity(city_name);
+        out.println(city_name + " has been removed");
     }
 
     City searchMaxTemp() {

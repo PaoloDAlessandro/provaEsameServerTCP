@@ -14,7 +14,7 @@ public class Server {
         ServerSocket serverSocket = openToServer();
         System.out.println("Server socket started at port n: " + serverSocket.getLocalPort());
         Database db = new Database();
-        System.out.println("Database inizialized");
+        System.out.println("Database schema inizialized");
         while (true) {
             try {
                 clientSocket = serverSocket.accept();

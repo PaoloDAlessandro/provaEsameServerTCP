@@ -62,9 +62,14 @@ public class Database {
 
 
         try {
-            sql = "CREATE TABLE `prova` (`id` int(11) NOT NULL, `name` varchar(200) NOT NULL, `temp` double NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-            stmt.executeQuery(sql);
-            System.out.println("Database created successfully...");
+            sql = "CREATE TABLE `cities` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(200) NOT NULL , `temp` DOUBLE NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+            stmt.executeUpdate(sql);
+            System.out.println("Table created");
+
+            sql = "INSERT INTO cities (name, temp) VALUES ('Milan', 24.1), ('Rome', 27.2), ('Bologna', 25.6), ('Modena', 25.7);";
+
+            stmt.executeUpdate(sql);
+            System.out.println("table records added");
 
         } catch (SQLException e) {
             System.out.println("Table already exists");
