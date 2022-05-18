@@ -9,8 +9,6 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
-
-
 public class ClientHandler implements Runnable {
     Socket clientSocket;
     BufferedReader in;
@@ -63,7 +61,8 @@ public class ClientHandler implements Runnable {
                         out.println(s + " is not a command");
                         break;
                     case "hottest":
-                        out.println(gson.toJson(searchMaxTemp()));
+                        //out.println(gson.toJson(searchMaxTemp()));
+                        out.println(dbh.hottest());
                         break;
 
                     case "all":

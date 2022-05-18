@@ -104,6 +104,26 @@ public class DatabaseHandler {
 
         return result;
     }
+    
+    String hottest() {
+        
+        String result = "";
+        
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT * FROM cities ORDER BY temp DESC LIMIT 1";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            result += "{\"id\":" + rs.getInt(1) +
+                    ", \"name\":\"" + rs.getString(2) +
+                    "\", \"temp\":" + rs.getDouble(3) +
+                    " }, ";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return result;
+    }
 
     void removeCity(String name) {
 
