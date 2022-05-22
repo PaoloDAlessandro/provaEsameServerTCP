@@ -54,7 +54,6 @@ public class ClientHandler implements Runnable {
         String s;
         while (true) {
             s = receive();
-            System.out.println(s);
             try {
                 switch (s) {
                     default:
@@ -66,6 +65,7 @@ public class ClientHandler implements Runnable {
                         break;
 
                     case "all":
+                        //out.println(gson.toJson(cities));
                         out.println(dbh.selectAll());
                         break;
 
@@ -74,7 +74,7 @@ public class ClientHandler implements Runnable {
                         break;
 
                     case "sorted_by_name":
-                        sort_by_name();
+                        //sort_by_name();
                         out.println(dbh.sort_by_name());
                         //out.println(gson.toJson(cities));
                         break;

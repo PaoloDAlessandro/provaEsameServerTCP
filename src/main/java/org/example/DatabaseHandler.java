@@ -99,7 +99,7 @@ public class DatabaseHandler {
                     " }, ";
 
         } catch (SQLException e) {
-            System.out.println(e);
+            result = "ERROR: " + name + " is not present in the database";
         }
 
         return result;
@@ -141,4 +141,5 @@ public class DatabaseHandler {
     String cleanResult(String result) {
         return result.substring(0, result.length() - 2) + "]";
     }
+
 }
